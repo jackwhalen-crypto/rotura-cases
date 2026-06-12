@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rotura Case Study Queue</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#ffffff;--bg2:#f7f7f5;--bg3:#f0efe9;
+  --text:#1a1a18;--text2:#5a5a56;--text3:#9a9a94;
+  --border:#e0dfd8;--border2:#cccbc4;
+  --red-bg:#fef2f2;--red-text:#b91c1c;--red-border:#fecaca;
+  --yellow-bg:#fffbeb;--yellow-text:#92400e;--yellow-border:#fde68a;
+  --green-bg:#f0fdf4;--green-text:#166534;--green-border:#bbf7d0;
+  --blue-bg:#eff6ff;--blue-text:#1d4ed8;--blue-border:#bfdbfe;
+  --purple-bg:#faf5ff;--purple-text:#6b21a8;--purple-border:#e9d5ff;
+  --orange-bg:#fff7ed;--orange-text:#9a3412;--orange-border:#fed7aa;
+  --radius:8px;--radius-lg:12px;
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono:'SF Mono','Fira Code',monospace;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#1c1c1a;--bg2:#242422;--bg3:#2c2c28;
+    --text:#e8e8e0;--text2:#a0a09a;--text3:#606058;
+    --border:#38382e;--border2:#4a4a40;
+    --red-bg:#2d1515;--red-text:#fca5a5;--red-border:#7f1d1d;
+    --yellow-bg:#2d2000;--yellow-text:#fcd34d;--yellow-border:#78350f;
+    --green-bg:#0f2a18;--green-text:#86efac;--green-border:#14532d;
+    --blue-bg:#0f1e3a;--blue-text:#93c5fd;--blue-border:#1e3a5f;
+    --purple-bg:#1e0a2d;--purple-text:#d8b4fe;--purple-border:#4a1772;
+    --orange-bg:#2d1500;--orange-text:#fdba74;--orange-border:#7c2d12;
+  }
+}
+body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
+.app{max-width:900px;margin:0 auto;padding:24px 16px}
+.header{margin-bottom:24px}
+.header h1{font-size:20px;font-weight:600;color:var(--text);margin-bottom:4px}
+.header p{font-size:13px;color:var(--text2)}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.stat-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:12px 14px}
+.stat-card .label{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+.stat-card .value{font-size:22px;font-weight:600;color:var(--text)}
+.toolbar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.filter-btn{font-size:12px;padding:5px 12px;border-radius:20px;border:0.5px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;transition:all .15s}
+.filter-btn:hover{background:var(--bg2)}
+.filter-btn.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+.spacer{flex:1}
+.notion-link{font-size:12px;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:5px;padding:5px 10px;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--bg)}
+.notion-link:hover{border-color:var(--border2)}
+.queue{display:flex;flex-direction:column;gap:8px}
+.card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:border-color .15s}
+.card:hover{border-color:var(--border2)}
+.card.open{border-color:var(--blue-border);border-width:1px}
+.card-header{padding:14px 16px;display:flex;align-items:flex-start;gap:12px}
+.card-num{font-family:var(--mono);font-size:11px;color:var(--text3);flex-shrink:0;padding-top:2px;min-width:52px}
+.card-main{flex:1;min-width:0}
+.card-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px}
+.tag{font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px}
+.tag-red{background:var(--red-bg);color:var(--red-text);border:0.5px solid var(--red-border)}
+.tag-yellow{background:var(--yellow-bg);color:var(--yellow-text);border:0.5px solid var(--yellow-border)}
+.tag-blue{background:var(--blue-bg);color:var(--blue-text);border:0.5px solid var(--blue-border)}
+.tag-orange{background:var(--orange-bg);color:var(--orange-text);border:0.5px solid var(--orange-border)}
+.tag-purple{background:var(--purple-bg);color:var(--purple-text);border:0.5px solid var(--purple-border)}
+.tag-gray{background:var(--bg2);color:var(--text2);border:0.5px solid var(--border)}
+.card-meta{display:flex;gap:14px;font-size:12px;color:var(--text3)}
+.card-right{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.status-badge{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px}
+.st-unreviewed{background:var(--red-bg);color:var(--red-text)}
+.st-inreview{background:var(--yellow-bg);color:var(--yellow-text)}
+.st-complete{background:var(--green-bg);color:var(--green-text)}
+.chevron{font-size:14px;color:var(--text3);transition:transform .2s;line-height:1}
+.card.open .chevron{transform:rotate(180deg)}
+.card-body{border-top:0.5px solid var(--border);padding:16px}
+.section{margin-bottom:20px}
+.section:last-child{margin-bottom:0}
+.section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:10px}
+.timeline{display:flex;flex-direction:column}
+.tl-row{display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border)}
+.tl-row:last-child{border-bottom:none}
+.tl-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0;margin-top:1px}
+.r-nr{background:var(--red-bg);color:var(--red-text)}
+.r-accept{background:var(--green-bg);color:var(--green-text)}
+.r-reject{background:var(--orange-bg);color:var(--orange-text)}
+.r-blank{background:var(--bg2);color:var(--text3)}
+.tl-content{flex:1;min-width:0}
+.tl-meta{display:flex;align-items:center;gap:8px;margin-bottom:3px;flex-wrap:wrap}
+.tl-reviewer{font-size:12px;font-weight:500;color:var(--text)}
+.tl-date{font-size:11px;color:var(--text3)}
+.tl-note{font-size:12px;color:var(--text2);line-height:1.5}
+.tl-empty{font-size:11px;color:var(--text3);font-style:italic}
+.diag-grid{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.diag-chip{font-size:11px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--border2);color:var(--text2);cursor:pointer;background:transparent;transition:all .15s;user-select:none}
+.diag-chip:hover{background:var(--bg2)}
+.diag-chip.on{background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11px;font-weight:500;color:var(--text2);margin-bottom:5px}
+.field textarea{width:100%;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:9px 11px;font-size:12px;font-family:var(--font);color:var(--text);resize:vertical;min-height:80px;line-height:1.5;transition:border-color .15s}
+.field textarea:focus{outline:none;border-color:var(--border2)}
+.field textarea::placeholder{color:var(--text3)}
+.actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap;padding-top:12px;border-top:0.5px solid var(--border)}
+.btn{font-size:12px;padding:7px 14px;border-radius:var(--radius);border:0.5px solid var(--border);background:transparent;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s;white-space:nowrap}
+.btn:hover{background:var(--bg2);border-color:var(--border2)}
+.btn-blue{background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)}
+.btn-blue:hover{opacity:.85}
+.btn-green{background:var(--green-bg);color:var(--green-text);border-color:var(--green-border)}
+.btn-green:hover{opacity:.85}
+.save-msg{font-size:11px;color:var(--green-text);display:flex;align-items:center;gap:4px}
+.assign-row{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.assign-row label{font-size:11px;font-weight:500;color:var(--text2);white-space:nowrap}
+.assign-row select{flex:1;font-size:12px;padding:6px 10px;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer}
+.empty{text-align:center;padding:40px;color:var(--text3);font-size:13px}
+@media(max-width:600px){.stats-row{grid-template-columns:repeat(2,1fr)}.card-title{font-size:13px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <h1>Rotura Case Study Queue</h1>
+    <p>W2 EC review queue — flag problematic submission histories, diagnose what went wrong, draft coaching messages.</p>
+  </div>
+  <div class="stats-row" id="stats"></div>
+  <div class="toolbar">
+    <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All</button>
+    <button class="filter-btn" data-filter="Unreviewed" onclick="setFilter('Unreviewed')">Unreviewed</button>
+    <button class="filter-btn" data-filter="In Review" onclick="setFilter('In Review')">In Review</button>
+    <button class="filter-btn" data-filter="Complete" onclick="setFilter('Complete')">Complete</button>
+    <div class="spacer"></div>
+    <a class="notion-link" href="https://app.notion.com/p/bbc344189f274c2d8a79e58804940467" target="_blank">&#x2197; View in Notion</a>
+  </div>
+  <div class="queue" id="queue"></div>
+</div>
+<script>
+const W2_ECS=['tc3397@columbia.edu','pteixeir@knox.edu','jabbarimoh611@gmail.com','meh.asghari0@gmail.com','aadityapaudel2@gmail.com'];
+const DIAG_OPTS=['Solution not self-contained','Feedback not actionable','Inconsistent reviewer standards','Repeated same error sent back','Prompt/solution mismatch','Unnecessary rounds','Reviewers contradicting each other','LaTeX-only feedback missed math issues','Other'];
+const CASES=[
+  {id:'cs001',caseId:'CS-001',title:'Excessive Computation / Prompt Drift',project:'Frontier',nrCount:10,totalReviews:11,uniqueReviewers:5,daysInFlight:5,flags:['Excessive Rounds','Contradictory Feedback'],reviewers:'tc3397@columbia.edu, mohammad.mirakhor@gmail.com, laithsalaheddin14@gmail.com, meh.asghari0@gmail.com, bmkisley@gmail.com',timeline:[
+    {n:1,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 02',note:"Too computational — Newton's method not acceptable. Intermediate rounding changes final answer."},
+    {n:2,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 03',note:"Any problem requiring a computer cannot be accepted. Computations of coefficients and 'evaluate the three integrals numerically' violate this."},
+    {n:3,reviewer:'mohammad.mirakhor@gmail.com',result:'NR',date:'Jun 04',note:"New issue: region definition unclear. 'Union of all bounded regions enclosed by the curve' is not precise enough. Green's theorem integrals in Step 6 lack boundary orientation explanation."},
+    {n:4,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 05',note:"Submission requiring a computer is too computational. Two variables and integrals computed numerically."},
+    {n:5,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 05',note:"Problems need to be hand-solvable in reasonable time. Two variables and integrals computed numerically."},
+    {n:6,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 05',note:"Anything requiring a computer is excluded. Numerical evaluation for integrals/roots excluded unless you show calculations to rigorously establish an approximation."},
+    {n:7,reviewer:'laithsalaheddin14@gmail.com',result:'',date:'Jun 05',note:''},
+    {n:8,reviewer:'meh.asghari0@gmail.com',result:'NR',date:'Jun 05',note:"Steps 1-6 reasonable. Step 7 requires substantial numerical computation. Relies on Newton's method. Final answer M ≈ 3,041,361 cannot be reproduced by hand."},
+    {n:9,reviewer:'bmkisley@gmail.com',result:'NR',date:'Jun 06',note:"New issue: Exact Scalar answer type no longer accepted. Please revise prompt."},
+    {n:10,reviewer:'bmkisley@gmail.com',result:'NR',date:'Jun 06',note:"Problem requires 'use original parameter t throughout; do not reparameterize' but solution sets 'let u=t/6', invalidating the constraint."},
+    {n:11,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 07',note:"The solution is clearly for another problem than the one written in the prompt."},
+  ]},
+  {id:'cs002',caseId:'CS-002',title:'LaTeX Errors + Drifting Problem Statement',project:'Main',nrCount:10,totalReviews:14,uniqueReviewers:8,daysInFlight:7,flags:['Excessive Rounds','Multi-Reviewer','Contradictory Feedback'],reviewers:'jlburk@harding.edu, pteixeir@knox.edu, meh.asghari0@gmail.com, tc3397@columbia.edu, erinpmath@gmail.com, work.eng14@gmail.com, mohammad.mirakhor@gmail.com',timeline:[
+    {n:1,reviewer:'jlburk@harding.edu',result:'NR',date:'Apr 28',note:"'The integers can be partitioned' is ambiguous — does not specify the set."},
+    {n:2,reviewer:'jlburk@harding.edu',result:'NR',date:'Apr 29',note:"Definition of 'balanced' is ill-posed. Requires partitioning all integers into infinitely many n-tuples, but infinity is not a positive integer."},
+    {n:3,reviewer:'pteixeir@knox.edu',result:'NR',date:'Apr 29',note:"Step 4 contradicts Step 3. Set brackets must be typeset as \\{...\\} not {...}."},
+    {n:4,reviewer:'(unknown)',result:'',date:'Apr 30',note:''},
+    {n:5,reviewer:'meh.asghari0@gmail.com',result:'NR',date:'Apr 30',note:"Claim that even n is balanced exactly when 4|n is not justified — e.g. 14 should be included."},
+    {n:6,reviewer:'jlburk@harding.edu',result:'NR',date:'May 01',note:"Prompt still incorrect — set brackets {} render wrong in LaTeX. Cannot change your prompt for you."},
+    {n:7,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 01',note:"Claim about 4|n not justified. Also missing Final Answer: boxed format."},
+    {n:8,reviewer:'erinpmath@gmail.com',result:'',date:'May 01',note:''},
+    {n:9,reviewer:'meh.asghari0@gmail.com',result:'',date:'May 01',note:''},
+    {n:10,reviewer:'mohammad.mirakhor@gmail.com',result:'NR',date:'May 02',note:"Mod 4 argument in Step 3 doesn't prove n≡2(mod 4) can't be balanced. Gap in Step 5 — 0 in exceptional tuple not justified."},
+    {n:11,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 04',note:"LaTeX rendering error in prompt — matrix doesn't render. Cannot fix (it's in the prompt)."},
+    {n:12,reviewer:'work.eng14@gmail.com',result:'NR',date:'May 05',note:"Math correct (Smith normal form diag(2,4,4,0)) but LaTeX row breaks need \\\\. Domain explanation wrong — says Number Theory but this is Abstract Algebra / Module theory."},
+    {n:13,reviewer:'jlburk@harding.edu',result:'NR',date:'May 05',note:"LaTeX still broken. Row breaks should use \\\\."},
+    {n:14,reviewer:'jlburk@harding.edu',result:'REJECT',date:'May 05',note:''},
+  ]},
+  {id:'cs003',caseId:'CS-003',title:'Prompt Unresolved After 13 Rounds',project:'Main',nrCount:10,totalReviews:13,uniqueReviewers:6,daysInFlight:28,flags:['Excessive Rounds','Long In-Flight','Multi-Reviewer'],reviewers:'jlburk@harding.edu, tc3397@columbia.edu, laithsalaheddin14@gmail.com, bmkisley@gmail.com, mohammad.mirakhor@gmail.com, aadityapaudel2@gmail.com',timeline:[
+    {n:1,reviewer:'jlburk@harding.edu',result:'NR',date:'May 03',note:"Step 4 error: prompt asks for expected value but you computed probability."},
+    {n:2,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 03',note:"Solution relies on handwavy claim in Step 2: 'using run decomposition... a complete enumeration gives.' Not self-contained."},
+    {n:3,reviewer:'laithsalaheddin14@gmail.com',result:'',date:'May 14',note:''},
+    {n:4,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 14',note:"Solution doesn't fully answer the prompt. Estimator theta-hat-3 is generally inconsistent — prompt asking for its limiting distribution is ill-posed."},
+    {n:5,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 15',note:"Prompt says 'as functions of theta and c' so 'no finite ARE exists' is not acceptable. Avoid asking multiple questions within one prompt."},
+    {n:6,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 18',note:"Output very hard to check for models. Stick to one thing, specify desired output format."},
+    {n:7,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 19',note:"Estimator undefined when no observation satisfies Xi <= c. Convention for ARE should be stated."},
+    {n:8,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 20',note:"Prompt asks for multiple things but final answer is only a 4-tuple. Problem not fully solved."},
+    {n:9,reviewer:'bmkisley@gmail.com',result:'NR',date:'May 21',note:"Prompt has no actual ask — defines estimators but doesn't follow with any task."},
+    {n:10,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 29',note:"Avoid asking multiple different things, especially 'Discuss' — final answer must be reliably verified."},
+    {n:11,reviewer:'mohammad.mirakhor@gmail.com',result:'',date:'May 30',note:''},
+    {n:12,reviewer:'aadityapaudel2@gmail.com',result:'NR',date:'May 30',note:"Math is sound, prompt salvageable. Define a record and ask for an ordered tuple. Remove the word 'Discuss'."},
+    {n:13,reviewer:'jlburk@harding.edu',result:'REJECT',date:'May 31',note:''},
+  ]},
+  {id:'cs004',caseId:'CS-004',title:'Same NR Repeated 10x by One Reviewer',project:'Main',nrCount:10,totalReviews:12,uniqueReviewers:3,daysInFlight:16,flags:['Excessive Rounds','Repeated Same NR'],reviewers:'tc3397@columbia.edu, meh.asghari0@gmail.com, bmkisley@gmail.com',timeline:[
+    {n:1,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 22',note:"Not a good fit — no conceptual difficulty, mostly computational and routine. Solution not self-contained."},
+    {n:2,reviewer:'meh.asghari0@gmail.com',result:'NR',date:'May 22',note:"Agrees — too computational. Questions primarily computation-based are not accepted."},
+    {n:3,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 23',note:"Previous review still holds."},
+    {n:4,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 24',note:"Proofs not allowed: 'Then prove that', 'Prove that the block Cholesky factorization'."},
+    {n:5,reviewer:'bmkisley@gmail.com',result:'',date:'May 26',note:''},
+    {n:6,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 27',note:"Schur complement of A11 incorrectly labeled as Schur complement of A22. Expected output should be clearly stated."},
+    {n:7,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 31',note:"Avoid asking for multiple things, especially unverifiable like 'stating why the formula applies'."},
+    {n:8,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 02',note:"Same — multiple unrelated questions."},
+    {n:9,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 03',note:"'The Cholesky recurrence gives' and 'Sherman-Morrison gives' are complete black boxes."},
+    {n:10,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 03',note:"Not original — same kind of question submitted before. Exclusively computational, justifications too compressed."},
+    {n:11,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 06',note:"Solution compressed — perturbation bound stated without justification. Part (d) not reliably checkable."},
+    {n:12,reviewer:'tc3397@columbia.edu',result:'REJECT',date:'Jun 07',note:''},
+  ]},
+  {id:'cs005',caseId:'CS-005',title:'Formatting NRs Stalled Valid Submission',project:'Main',nrCount:9,totalReviews:10,uniqueReviewers:6,daysInFlight:25,flags:['Multi-Reviewer','Contradictory Feedback'],reviewers:'tc3397@columbia.edu, aadityapaudel2@gmail.com, meh.asghari0@gmail.com, jlburk@harding.edu, work.eng14@gmail.com, gengqiang.xie@gmail.com',timeline:[
+    {n:1,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 10',note:"Please format using LaTeX math mode delimited with $. Not rendering correctly."},
+    {n:2,reviewer:'aadityapaudel2@gmail.com',result:'NR',date:'May 10',note:"Too much formatting error to fix manually. Use $...$ style LaTeX throughout."},
+    {n:3,reviewer:'meh.asghari0@gmail.com',result:'NR',date:'May 10',note:"Solution is correct but LaTeX notation needs revision. $...$ and $$...$$ allowed; \\(...\\) and \\[...\\] are not."},
+    {n:4,reviewer:'jlburk@harding.edu',result:'NR',date:'Jun 01',note:"Formatting still wrong. Should take less than 20 seconds to fix."},
+    {n:5,reviewer:'work.eng14@gmail.com',result:'NR',date:'Jun 01',note:"New issue: Exact Scalar no longer accepted. Revise so answer is non-scalar type, e.g. vector (E1, E2, E)."},
+    {n:6,reviewer:'meh.asghari0@gmail.com',result:'NR',date:'Jun 02',note:"Solution correct but LaTeX still wrong. Don't put final answer in box in separate answer field."},
+    {n:7,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 02',note:"Math checks out. Final step must use boxed format. Missing computation of E."},
+    {n:8,reviewer:'gengqiang.xie@gmail.com',result:'NR',date:'Jun 03',note:"Rebuttal focuses on formatting but doesn't address concern about computation of E. Reads generic."},
+    {n:9,reviewer:'work.eng14@gmail.com',result:'NR',date:'Jun 04',note:"Step 4 still a black box. Classification concern — Diophantine equations almost closed."},
+    {n:10,reviewer:'tc3397@columbia.edu',result:'ACCEPT',date:'Jun 04',note:''},
+  ]},
+];
+
+const state={filter:'all',open:null,data:{}};
+
+function loadState(){try{const s=localStorage.getItem('rotura_q');if(s)Object.assign(state.data,JSON.parse(s));}catch(e){}}
+function saveState(){try{localStorage.setItem('rotura_q',JSON.stringify(state.data));}catch(e){}}
+function getCD(id){return state.data[id]||{};}
+function setCD(id,p){state.data[id]={...getCD(id),...p};saveState();}
+function getStatus(id){return getCD(id).status||'Unreviewed';}
+
+function flagTag(f){
+  const m={'Excessive Rounds':'red','Multi-Reviewer':'blue','Long In-Flight':'orange','Contradictory Feedback':'yellow','Repeated Same NR':'purple'};
+  return `<span class="tag tag-${m[f]||'gray'}">${f}</span>`;
+}
+function stClass(s){return s==='In Review'?'st-inreview':s==='Complete'?'st-complete':'st-unreviewed';}
+function rClass(r){return r==='NR'?'r-nr':r==='ACCEPT'?'r-accept':r==='REJECT'?'r-reject':'r-blank';}
+
+function renderStats(){
+  const u=CASES.filter(c=>getStatus(c.id)==='Unreviewed').length;
+  const i=CASES.filter(c=>getStatus(c.id)==='In Review').length;
+  const d=CASES.filter(c=>getStatus(c.id)==='Complete').length;
+  document.getElementById('stats').innerHTML=[
+    ['Total Cases',CASES.length,''],
+    ['Unreviewed',u,'color:var(--red-text)'],
+    ['In Review',i,'color:var(--yellow-text)'],
+    ['Complete',d,'color:var(--green-text)'],
+  ].map(([l,v,s])=>`<div class="stat-card"><div class="label">${l}</div><div class="value" style="${s}">${v}</div></div>`).join('');
+}
+
+function renderQueue(){
+  const f=CASES.filter(c=>state.filter==='all'||getStatus(c.id)===state.filter);
+  if(!f.length){document.getElementById('queue').innerHTML='<div class="empty">No cases in this view.</div>';return;}
+  document.getElementById('queue').innerHTML=f.map(c=>{
+    const isOpen=state.open===c.id;
+    const st=getStatus(c.id);
+    return `<div class="card${isOpen?' open':''}" id="card-${c.id}">
+      <div class="card-header" onclick="toggleCard('${c.id}')">
+        <span class="card-num">${c.caseId}</span>
+        <div class="card-main">
+          <div class="card-title">${c.title}</div>
+          <div class="card-tags">${c.flags.map(flagTag).join('')}<span class="tag tag-${c.project==='Frontier'?'purple':'blue'}">${c.project}</span></div>
+          <div class="card-meta"><span>${c.nrCount} NRs / ${c.totalReviews} reviews</span><span>${c.uniqueReviewers} reviewers</span><span>${c.daysInFlight}d in flight</span></div>
+        </div>
+        <div class="card-right">
+          <span class="status-badge ${stClass(st)}">${st}</span>
+          <span class="chevron">${isOpen?'&#9650;':'&#9660;'}</span>
+        </div>
+      </div>
+      ${isOpen?renderBody(c):''}
+    </div>`;
+  }).join('');
+}
+
+function renderBody(c){
+  const cd=getCD(c.id);
+  const dt=cd.diagTags||[];
+  return `<div class="card-body">
+    <div class="section">
+      <div class="section-title">Review history (${c.nrCount} NRs across ${c.totalReviews} rounds)</div>
+      <div class="timeline">${c.timeline.map(r=>`<div class="tl-row">
+        <div class="tl-num ${rClass(r.result)}">${r.n}</div>
+        <div class="tl-content">
+          <div class="tl-meta">
+            <span class="tl-reviewer">${r.reviewer.split('@')[0]}</span>
+            <span class="tl-date">${r.date}</span>
+            ${r.result?`<span class="tag tag-${r.result==='NR'?'red':r.result==='ACCEPT'?'gray':'orange'}" style="font-size:10px">${r.result}</span>`:''}
+          </div>
+          ${r.note?`<div class="tl-note">${r.note}</div>`:`<div class="tl-empty">No revision note recorded.</div>`}
+        </div>
+      </div>`).join('')}</div>
+    </div>
+    <div class="section">
+      <div class="section-title">Diagnosis</div>
+      <div class="assign-row">
+        <label>Assigned to:</label>
+        <select onchange="setCD('${c.id}',{assignee:this.value})">
+          <option value="">&#8212; Unassigned &#8212;</option>
+          ${W2_ECS.map(e=>`<option value="${e}"${cd.assignee===e?' selected':''}>${e}</option>`).join('')}
+        </select>
+      </div>
+      <div class="diag-grid">${DIAG_OPTS.map(o=>`<span class="diag-chip${dt.includes(o)?' on':''}" onclick="toggleDiag('${c.id}','${o}')">${o}</span>`).join('')}</div>
+      <div class="field">
+        <label>Additional notes</label>
+        <textarea placeholder="Describe root cause, reviewer gaps, submitter pattern..." onchange="setCD('${c.id}',{diagNotes:this.value})">${cd.diagNotes||''}</textarea>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Coaching messages</div>
+      <div class="field">
+        <label>Reviewer coaching note &mdash; reviewers: ${c.reviewers}</label>
+        <textarea placeholder="Specific, actionable message for reviewer(s). What should they do differently?" onchange="setCD('${c.id}',{reviewerNote:this.value})">${cd.reviewerNote||''}</textarea>
+      </div>
+      <div class="field">
+        <label>Submitter coaching note</label>
+        <textarea placeholder="Message for the submitter. What can they fix going forward?" onchange="setCD('${c.id}',{submitterNote:this.value})">${cd.submitterNote||''}</textarea>
+      </div>
+    </div>
+    <div class="actions">
+      ${cd.savedAt?`<span class="save-msg">&#10003; Saved ${cd.savedAt}</span>`:''}
+      <select onchange="updateStatus('${c.id}',this.value)" style="font-size:12px;padding:6px 10px;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--bg2);color:var(--text)">
+        <option${getStatus(c.id)==='Unreviewed'?' selected':''}>Unreviewed</option>
+        <option${getStatus(c.id)==='In Review'?' selected':''}>In Review</option>
+        <option${getStatus(c.id)==='Complete'?' selected':''}>Complete</option>
+      </select>
+      <button class="btn btn-blue" onclick="copyNotes('${c.id}')">&#8663; Copy coaching notes</button>
+      <button class="btn btn-green" onclick="markComplete('${c.id}')">&#10003; Save &amp; complete</button>
+    </div>
+  </div>`;
+}
+
+window.toggleCard=function(id){
+  state.open=state.open===id?null:id;
+  if(state.open&&getStatus(id)==='Unreviewed')setCD(id,{status:'In Review'});
+  render();
+  if(state.open)setTimeout(()=>{const el=document.getElementById('card-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
+};
+window.setFilter=function(f){
+  state.filter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.filter===f));
+  renderQueue();renderStats();
+};
+window.updateStatus=function(id,v){setCD(id,{status:v});renderStats();};
+window.toggleDiag=function(id,opt){
+  const t=[...(getCD(id).diagTags||[])];
+  const i=t.indexOf(opt);if(i>=0)t.splice(i,1);else t.push(opt);
+  setCD(id,{diagTags:t});
+  document.querySelectorAll(`#card-${id} .diag-chip`).forEach(ch=>ch.classList.toggle('on',t.includes(ch.textContent)));
+};
+window.copyNotes=function(id){
+  const cd=getCD(id);const c=CASES.find(x=>x.id===id);
+  const txt=`=== REVIEWER COACHING NOTE (${c.caseId}) ===\n${cd.reviewerNote||'(not drafted)'}\n\n=== SUBMITTER COACHING NOTE (${c.caseId}) ===\n${cd.submitterNote||'(not drafted)'}`;
+  navigator.clipboard.writeText(txt).catch(()=>{});
+};
+window.markComplete=function(id){
+  const now=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  setCD(id,{status:'Complete',savedAt:now});
+  renderStats();renderQueue();
+};
+window.setCD=setCD;
+
+function render(){renderStats();renderQueue();}
+loadState();render();
+</script>
+</body>
+</html>
