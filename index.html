@@ -34,29 +34,27 @@
   }
 }
 body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
-.app{max-width:900px;margin:0 auto;padding:24px 16px}
+.app{max-width:960px;margin:0 auto;padding:24px 16px}
 .header{margin-bottom:24px}
 .header h1{font-size:20px;font-weight:600;color:var(--text);margin-bottom:4px}
 .header p{font-size:13px;color:var(--text2)}
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
 .stat-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:12px 14px}
-.stat-card .label{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
-.stat-card .value{font-size:22px;font-weight:600;color:var(--text)}
+.stat-label{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+.stat-value{font-size:22px;font-weight:600}
 .toolbar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
-.filter-btn{font-size:12px;padding:5px 12px;border-radius:20px;border:0.5px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;transition:all .15s}
-.filter-btn:hover{background:var(--bg2)}
+.filter-btn{font-size:12px;padding:5px 12px;border-radius:20px;border:0.5px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer}
 .filter-btn.active{background:var(--text);color:var(--bg);border-color:var(--text)}
 .spacer{flex:1}
 .notion-link{font-size:12px;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:5px;padding:5px 10px;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--bg)}
-.notion-link:hover{border-color:var(--border2)}
 .queue{display:flex;flex-direction:column;gap:8px}
-.card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:border-color .15s}
+.card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer}
 .card:hover{border-color:var(--border2)}
 .card.open{border-color:var(--blue-border);border-width:1px}
 .card-header{padding:14px 16px;display:flex;align-items:flex-start;gap:12px}
 .card-num{font-family:var(--mono);font-size:11px;color:var(--text3);flex-shrink:0;padding-top:2px;min-width:52px}
 .card-main{flex:1;min-width:0}
-.card-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-title{font-size:14px;font-weight:500;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px}
 .tag{font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px}
 .tag-red{background:var(--red-bg);color:var(--red-text);border:0.5px solid var(--red-border)}
@@ -71,12 +69,25 @@ body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:
 .st-unreviewed{background:var(--red-bg);color:var(--red-text)}
 .st-inreview{background:var(--yellow-bg);color:var(--yellow-text)}
 .st-complete{background:var(--green-bg);color:var(--green-text)}
-.chevron{font-size:14px;color:var(--text3);transition:transform .2s;line-height:1}
+.chevron{font-size:14px;color:var(--text3);transition:transform .2s}
 .card.open .chevron{transform:rotate(180deg)}
-.card-body{border-top:0.5px solid var(--border);padding:16px}
-.section{margin-bottom:20px}
-.section:last-child{margin-bottom:0}
+.card-body{border-top:0.5px solid var(--border);padding:0}
+.section{padding:14px 16px;border-bottom:0.5px solid var(--border)}
+.section:last-child{border-bottom:none}
 .section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:10px}
+/* Collapsible submission */
+.submission-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:10px 14px;background:var(--bg2);border-radius:var(--radius);border:0.5px solid var(--border);margin-bottom:10px;font-size:12px;font-weight:500;color:var(--text2)}
+.submission-toggle:hover{border-color:var(--border2)}
+.submission-content{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;display:none;font-size:12px;line-height:1.6}
+.submission-content.visible{display:block}
+.sub-field{margin-bottom:12px}
+.sub-field:last-child{margin-bottom:0}
+.sub-field-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:4px}
+.sub-field-value{color:var(--text2);font-family:var(--mono);font-size:11px;white-space:pre-wrap;word-break:break-word;max-height:200px;overflow-y:auto;background:var(--bg);border:0.5px solid var(--border);border-radius:6px;padding:8px 10px}
+.sub-field-value.short{font-family:var(--font);font-size:12px;background:none;border:none;padding:0;max-height:none;overflow:visible}
+.steps-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.step-item{background:var(--bg);border:0.5px solid var(--border);border-radius:6px;padding:8px 10px;font-size:11px;font-family:var(--mono);white-space:pre-wrap;word-break:break-word;max-height:120px;overflow-y:auto;color:var(--text2)}
+/* Timeline */
 .timeline{display:flex;flex-direction:column}
 .tl-row{display:flex;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border)}
 .tl-row:last-child{border-bottom:none}
@@ -86,40 +97,42 @@ body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:
 .r-reject{background:var(--orange-bg);color:var(--orange-text)}
 .r-blank{background:var(--bg2);color:var(--text3)}
 .tl-content{flex:1;min-width:0}
-.tl-meta{display:flex;align-items:center;gap:8px;margin-bottom:3px;flex-wrap:wrap}
-.tl-reviewer{font-size:12px;font-weight:500;color:var(--text)}
+.tl-meta{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+.tl-reviewer{font-size:12px;font-weight:500}
 .tl-date{font-size:11px;color:var(--text3)}
-.tl-note{font-size:12px;color:var(--text2);line-height:1.5}
+.tl-summary{font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:4px;font-style:italic}
+.tl-verbatim-toggle{font-size:11px;color:var(--blue-text);cursor:pointer;background:none;border:none;padding:0;text-decoration:underline}
+.tl-verbatim{font-size:11px;color:var(--text2);line-height:1.5;background:var(--bg2);border:0.5px solid var(--border);border-radius:6px;padding:7px 9px;margin-top:4px;display:none;white-space:pre-wrap}
+.tl-verbatim.visible{display:block}
 .tl-empty{font-size:11px;color:var(--text3);font-style:italic}
+/* Diagnosis */
 .diag-grid{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.diag-chip{font-size:11px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--border2);color:var(--text2);cursor:pointer;background:transparent;transition:all .15s;user-select:none}
-.diag-chip:hover{background:var(--bg2)}
+.diag-chip{font-size:11px;padding:4px 10px;border-radius:20px;border:0.5px solid var(--border2);color:var(--text2);cursor:pointer;background:transparent;user-select:none}
 .diag-chip.on{background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)}
+.assign-row{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.assign-row label{font-size:11px;font-weight:500;color:var(--text2);white-space:nowrap}
+.assign-row select{flex:1;font-size:12px;padding:6px 10px;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--bg2);color:var(--text)}
 .field{margin-bottom:12px}
 .field label{display:block;font-size:11px;font-weight:500;color:var(--text2);margin-bottom:5px}
-.field textarea{width:100%;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:9px 11px;font-size:12px;font-family:var(--font);color:var(--text);resize:vertical;min-height:80px;line-height:1.5;transition:border-color .15s}
+.field textarea{width:100%;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:9px 11px;font-size:12px;font-family:var(--font);color:var(--text);resize:vertical;min-height:80px;line-height:1.5}
 .field textarea:focus{outline:none;border-color:var(--border2)}
 .field textarea::placeholder{color:var(--text3)}
 .actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap;padding-top:12px;border-top:0.5px solid var(--border)}
-.btn{font-size:12px;padding:7px 14px;border-radius:var(--radius);border:0.5px solid var(--border);background:transparent;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s;white-space:nowrap}
-.btn:hover{background:var(--bg2);border-color:var(--border2)}
+.btn{font-size:12px;padding:7px 14px;border-radius:var(--radius);border:0.5px solid var(--border);background:transparent;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.btn:hover{background:var(--bg2)}
 .btn-blue{background:var(--blue-bg);color:var(--blue-text);border-color:var(--blue-border)}
-.btn-blue:hover{opacity:.85}
 .btn-green{background:var(--green-bg);color:var(--green-text);border-color:var(--green-border)}
-.btn-green:hover{opacity:.85}
-.save-msg{font-size:11px;color:var(--green-text);display:flex;align-items:center;gap:4px}
-.assign-row{display:flex;gap:8px;align-items:center;margin-bottom:12px}
-.assign-row label{font-size:11px;font-weight:500;color:var(--text2);white-space:nowrap}
-.assign-row select{flex:1;font-size:12px;padding:6px 10px;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--bg2);color:var(--text);cursor:pointer}
+.save-msg{font-size:11px;color:var(--green-text)}
 .empty{text-align:center;padding:40px;color:var(--text3);font-size:13px}
-@media(max-width:600px){.stats-row{grid-template-columns:repeat(2,1fr)}.card-title{font-size:13px}}
+.unavailable{font-size:12px;color:var(--text3);font-style:italic;padding:10px 0}
+@media(max-width:600px){.stats-row{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="header">
     <h1>Rotura Case Study Queue</h1>
-    <p>W2 EC review queue — flag problematic submission histories, diagnose what went wrong, draft coaching messages.</p>
+    <p>Review flagged submission histories, diagnose what went wrong, and draft coaching messages.</p>
   </div>
   <div class="stats-row" id="stats"></div>
   <div class="toolbar">
@@ -135,83 +148,130 @@ body{font-family:var(--font);background:var(--bg3);color:var(--text);min-height:
 <script>
 const W2_ECS=['tc3397@columbia.edu','pteixeir@knox.edu','jabbarimoh611@gmail.com','meh.asghari0@gmail.com','aadityapaudel2@gmail.com'];
 const DIAG_OPTS=['Solution not self-contained','Feedback not actionable','Inconsistent reviewer standards','Repeated same error sent back','Prompt/solution mismatch','Unnecessary rounds','Reviewers contradicting each other','LaTeX-only feedback missed math issues','Other'];
+
 const CASES=[
-  {id:'cs001',caseId:'CS-001',title:'Excessive Computation / Prompt Drift',project:'Frontier',nrCount:10,totalReviews:11,uniqueReviewers:5,daysInFlight:5,flags:['Excessive Rounds','Contradictory Feedback'],reviewers:'tc3397@columbia.edu, mohammad.mirakhor@gmail.com, laithsalaheddin14@gmail.com, meh.asghari0@gmail.com, bmkisley@gmail.com',timeline:[
-    {n:1,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 02',note:"Too computational — Newton's method not acceptable. Intermediate rounding changes final answer."},
-    {n:2,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 03',note:"Any problem requiring a computer cannot be accepted. Computations of coefficients and 'evaluate the three integrals numerically' violate this."},
-    {n:3,reviewer:'mohammad.mirakhor@gmail.com',result:'NR',date:'Jun 04',note:"New issue: region definition unclear. 'Union of all bounded regions enclosed by the curve' is not precise enough. Green's theorem integrals in Step 6 lack boundary orientation explanation."},
-    {n:4,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 05',note:"Submission requiring a computer is too computational. Two variables and integrals computed numerically."},
-    {n:5,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 05',note:"Problems need to be hand-solvable in reasonable time. Two variables and integrals computed numerically."},
-    {n:6,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 05',note:"Anything requiring a computer is excluded. Numerical evaluation for integrals/roots excluded unless you show calculations to rigorously establish an approximation."},
-    {n:7,reviewer:'laithsalaheddin14@gmail.com',result:'',date:'Jun 05',note:''},
-    {n:8,reviewer:'meh.asghari0@gmail.com',result:'NR',date:'Jun 05',note:"Steps 1-6 reasonable. Step 7 requires substantial numerical computation. Relies on Newton's method. Final answer M ≈ 3,041,361 cannot be reproduced by hand."},
-    {n:9,reviewer:'bmkisley@gmail.com',result:'NR',date:'Jun 06',note:"New issue: Exact Scalar answer type no longer accepted. Please revise prompt."},
-    {n:10,reviewer:'bmkisley@gmail.com',result:'NR',date:'Jun 06',note:"Problem requires 'use original parameter t throughout; do not reparameterize' but solution sets 'let u=t/6', invalidating the constraint."},
-    {n:11,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 07',note:"The solution is clearly for another problem than the one written in the prompt."},
-  ]},
-  {id:'cs002',caseId:'CS-002',title:'LaTeX Errors + Drifting Problem Statement',project:'Main',nrCount:10,totalReviews:14,uniqueReviewers:8,daysInFlight:7,flags:['Excessive Rounds','Multi-Reviewer','Contradictory Feedback'],reviewers:'jlburk@harding.edu, pteixeir@knox.edu, meh.asghari0@gmail.com, tc3397@columbia.edu, erinpmath@gmail.com, work.eng14@gmail.com, mohammad.mirakhor@gmail.com',timeline:[
-    {n:1,reviewer:'jlburk@harding.edu',result:'NR',date:'Apr 28',note:"'The integers can be partitioned' is ambiguous — does not specify the set."},
-    {n:2,reviewer:'jlburk@harding.edu',result:'NR',date:'Apr 29',note:"Definition of 'balanced' is ill-posed. Requires partitioning all integers into infinitely many n-tuples, but infinity is not a positive integer."},
-    {n:3,reviewer:'pteixeir@knox.edu',result:'NR',date:'Apr 29',note:"Step 4 contradicts Step 3. Set brackets must be typeset as \\{...\\} not {...}."},
-    {n:4,reviewer:'(unknown)',result:'',date:'Apr 30',note:''},
-    {n:5,reviewer:'meh.asghari0@gmail.com',result:'NR',date:'Apr 30',note:"Claim that even n is balanced exactly when 4|n is not justified — e.g. 14 should be included."},
-    {n:6,reviewer:'jlburk@harding.edu',result:'NR',date:'May 01',note:"Prompt still incorrect — set brackets {} render wrong in LaTeX. Cannot change your prompt for you."},
-    {n:7,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 01',note:"Claim about 4|n not justified. Also missing Final Answer: boxed format."},
-    {n:8,reviewer:'erinpmath@gmail.com',result:'',date:'May 01',note:''},
-    {n:9,reviewer:'meh.asghari0@gmail.com',result:'',date:'May 01',note:''},
-    {n:10,reviewer:'mohammad.mirakhor@gmail.com',result:'NR',date:'May 02',note:"Mod 4 argument in Step 3 doesn't prove n≡2(mod 4) can't be balanced. Gap in Step 5 — 0 in exceptional tuple not justified."},
-    {n:11,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 04',note:"LaTeX rendering error in prompt — matrix doesn't render. Cannot fix (it's in the prompt)."},
-    {n:12,reviewer:'work.eng14@gmail.com',result:'NR',date:'May 05',note:"Math correct (Smith normal form diag(2,4,4,0)) but LaTeX row breaks need \\\\. Domain explanation wrong — says Number Theory but this is Abstract Algebra / Module theory."},
-    {n:13,reviewer:'jlburk@harding.edu',result:'NR',date:'May 05',note:"LaTeX still broken. Row breaks should use \\\\."},
-    {n:14,reviewer:'jlburk@harding.edu',result:'REJECT',date:'May 05',note:''},
-  ]},
-  {id:'cs003',caseId:'CS-003',title:'Prompt Unresolved After 13 Rounds',project:'Main',nrCount:10,totalReviews:13,uniqueReviewers:6,daysInFlight:28,flags:['Excessive Rounds','Long In-Flight','Multi-Reviewer'],reviewers:'jlburk@harding.edu, tc3397@columbia.edu, laithsalaheddin14@gmail.com, bmkisley@gmail.com, mohammad.mirakhor@gmail.com, aadityapaudel2@gmail.com',timeline:[
-    {n:1,reviewer:'jlburk@harding.edu',result:'NR',date:'May 03',note:"Step 4 error: prompt asks for expected value but you computed probability."},
-    {n:2,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 03',note:"Solution relies on handwavy claim in Step 2: 'using run decomposition... a complete enumeration gives.' Not self-contained."},
-    {n:3,reviewer:'laithsalaheddin14@gmail.com',result:'',date:'May 14',note:''},
-    {n:4,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 14',note:"Solution doesn't fully answer the prompt. Estimator theta-hat-3 is generally inconsistent — prompt asking for its limiting distribution is ill-posed."},
-    {n:5,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 15',note:"Prompt says 'as functions of theta and c' so 'no finite ARE exists' is not acceptable. Avoid asking multiple questions within one prompt."},
-    {n:6,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 18',note:"Output very hard to check for models. Stick to one thing, specify desired output format."},
-    {n:7,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 19',note:"Estimator undefined when no observation satisfies Xi <= c. Convention for ARE should be stated."},
-    {n:8,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 20',note:"Prompt asks for multiple things but final answer is only a 4-tuple. Problem not fully solved."},
-    {n:9,reviewer:'bmkisley@gmail.com',result:'NR',date:'May 21',note:"Prompt has no actual ask — defines estimators but doesn't follow with any task."},
-    {n:10,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 29',note:"Avoid asking multiple different things, especially 'Discuss' — final answer must be reliably verified."},
-    {n:11,reviewer:'mohammad.mirakhor@gmail.com',result:'',date:'May 30',note:''},
-    {n:12,reviewer:'aadityapaudel2@gmail.com',result:'NR',date:'May 30',note:"Math is sound, prompt salvageable. Define a record and ask for an ordered tuple. Remove the word 'Discuss'."},
-    {n:13,reviewer:'jlburk@harding.edu',result:'REJECT',date:'May 31',note:''},
-  ]},
-  {id:'cs004',caseId:'CS-004',title:'Same NR Repeated 10x by One Reviewer',project:'Main',nrCount:10,totalReviews:12,uniqueReviewers:3,daysInFlight:16,flags:['Excessive Rounds','Repeated Same NR'],reviewers:'tc3397@columbia.edu, meh.asghari0@gmail.com, bmkisley@gmail.com',timeline:[
-    {n:1,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 22',note:"Not a good fit — no conceptual difficulty, mostly computational and routine. Solution not self-contained."},
-    {n:2,reviewer:'meh.asghari0@gmail.com',result:'NR',date:'May 22',note:"Agrees — too computational. Questions primarily computation-based are not accepted."},
-    {n:3,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 23',note:"Previous review still holds."},
-    {n:4,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 24',note:"Proofs not allowed: 'Then prove that', 'Prove that the block Cholesky factorization'."},
-    {n:5,reviewer:'bmkisley@gmail.com',result:'',date:'May 26',note:''},
-    {n:6,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 27',note:"Schur complement of A11 incorrectly labeled as Schur complement of A22. Expected output should be clearly stated."},
-    {n:7,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 31',note:"Avoid asking for multiple things, especially unverifiable like 'stating why the formula applies'."},
-    {n:8,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 02',note:"Same — multiple unrelated questions."},
-    {n:9,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 03',note:"'The Cholesky recurrence gives' and 'Sherman-Morrison gives' are complete black boxes."},
-    {n:10,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 03',note:"Not original — same kind of question submitted before. Exclusively computational, justifications too compressed."},
-    {n:11,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 06',note:"Solution compressed — perturbation bound stated without justification. Part (d) not reliably checkable."},
-    {n:12,reviewer:'tc3397@columbia.edu',result:'REJECT',date:'Jun 07',note:''},
-  ]},
-  {id:'cs005',caseId:'CS-005',title:'Formatting NRs Stalled Valid Submission',project:'Main',nrCount:9,totalReviews:10,uniqueReviewers:6,daysInFlight:25,flags:['Multi-Reviewer','Contradictory Feedback'],reviewers:'tc3397@columbia.edu, aadityapaudel2@gmail.com, meh.asghari0@gmail.com, jlburk@harding.edu, work.eng14@gmail.com, gengqiang.xie@gmail.com',timeline:[
-    {n:1,reviewer:'tc3397@columbia.edu',result:'NR',date:'May 10',note:"Please format using LaTeX math mode delimited with $. Not rendering correctly."},
-    {n:2,reviewer:'aadityapaudel2@gmail.com',result:'NR',date:'May 10',note:"Too much formatting error to fix manually. Use $...$ style LaTeX throughout."},
-    {n:3,reviewer:'meh.asghari0@gmail.com',result:'NR',date:'May 10',note:"Solution is correct but LaTeX notation needs revision. $...$ and $$...$$ allowed; \\(...\\) and \\[...\\] are not."},
-    {n:4,reviewer:'jlburk@harding.edu',result:'NR',date:'Jun 01',note:"Formatting still wrong. Should take less than 20 seconds to fix."},
-    {n:5,reviewer:'work.eng14@gmail.com',result:'NR',date:'Jun 01',note:"New issue: Exact Scalar no longer accepted. Revise so answer is non-scalar type, e.g. vector (E1, E2, E)."},
-    {n:6,reviewer:'meh.asghari0@gmail.com',result:'NR',date:'Jun 02',note:"Solution correct but LaTeX still wrong. Don't put final answer in box in separate answer field."},
-    {n:7,reviewer:'tc3397@columbia.edu',result:'NR',date:'Jun 02',note:"Math checks out. Final step must use boxed format. Missing computation of E."},
-    {n:8,reviewer:'gengqiang.xie@gmail.com',result:'NR',date:'Jun 03',note:"Rebuttal focuses on formatting but doesn't address concern about computation of E. Reads generic."},
-    {n:9,reviewer:'work.eng14@gmail.com',result:'NR',date:'Jun 04',note:"Step 4 still a black box. Classification concern — Diophantine equations almost closed."},
-    {n:10,reviewer:'tc3397@columbia.edu',result:'ACCEPT',date:'Jun 04',note:''},
-  ]},
+{id:'cs001',caseId:'CS-001',title:'Excessive Computation / Prompt Drift',project:'Frontier',nrCount:10,totalReviews:11,uniqueReviewers:5,daysInFlight:5,flags:['Excessive Rounds','Contradictory Feedback'],
+submission:{
+  prompt:"Consider the lamina with density function $\\rho(x, y) = y + 32$ that occupies the union of bounded connected components of the complement of the trace of the parametric curve $x = t + 10\\pi \\sin(t/6)$, $y = 6 + 10\\pi \\cos(t/6)$, where $-11\\pi \\le t \\le 11\\pi$. What is the mass of the lamina?\n\nIn your computation of the answer, use the original parameter $t$ throughout; do not reparameterize the curve. Round all boundary-defining $t$-values to one decimal place and round the final answer to the nearest thousand.",
+  domain:"Calculus — Integral calculus",
+  answerType:"Numerical scalar approximation",
+  problemType:"Numerical approximation",
+  finalAnswer:"$152{,}000$",
+  domainExplanation:"This problem involves calculating the mass of a lamina, which is part of integral calculus. The problem also involves a parametric equation, which is part of precalculus. However, the calculus is more advanced than the precalculus.",
+  steps:["Step 1: The curve is a prolate trochoid. Because $10\\pi > 6$, the curve loops back on itself and creates several closed bounded regions. The mass is $M = \\iint_R (y+32)\\,dA$ where $R$ is the union of bounded regions.","Step 2: To find self-intersections, let $u = t/6$. Suppose two parameters $u$ and $v$ give the same point. Since $y(u) = 6 + 10\\pi\\cos u$, we need $\\cos u = \\cos v$, giving $v = -u + 2k\\pi$. Impose $x(u)=x(v)$: $3u + 5\\pi\\sin u = 3k\\pi$.","Step 3: For $k=1$: solutions $u = \\pi/6$ (i.e. $t \\approx 3.1$) and $u = 11\\pi/6$ (i.e. $t \\approx 34.6$). For $k=0$: Newton's method gives $\\alpha \\approx 4.02$ ($t \\approx 24.1$) and $\\beta \\approx 5.01$ ($t \\approx 30.1$). By symmetry the left-loop and central crossings are at $\\pm$ these values.","Step 4: The trace forms a connected planar graph with $V=4$ vertices and $E=7$ edges, giving $4$ bounded components by Euler's formula: two congruent side regions, one top middle region, one small central region. $M = 2M_{\\text{loop}} + M_{\\text{top}} - M_{\\text{small}}$.","Step 5: Green's theorem with $P = -(y^2/2 + 32y)$, $Q=0$ gives $\\iint(y+32)\\,dA = \\oint P\\,dx$. Since $dx/dt = y(t)/6$, define $K(t) = y(t)^3/12 + 16y(t)^2/3$. Then $P\\,dx = -K(t)\\,dt$.","Step 6: Each region's mass is a signed integral of $K(t)$ over the appropriate arc intervals.","Step 7: Numerically evaluate: $M_{\\text{loop}} \\approx 67{,}796$; $M_{\\text{top}} \\approx 21{,}622$; $M_{\\text{small}} \\approx 4{,}898$. Therefore $M \\approx 2(67{,}796) + 21{,}622 - 4{,}898 \\approx 152{,}316$. Rounded: $\\boxed{152{,}000}$."]
+},
+timeline:[
+  {n:1,reviewer:'Reviewer A',result:'NR',date:'Jun 02',summary:"Too computational — Newton's method not acceptable. Intermediate rounding changes final answer.",verbatim:"Problems are not allowed to rely on programs/computer, so the value of α and β that was derived by \"you can use Newton's method with\" is not acceptable. Also, all the intermediate rounding can change the final answer, so that should be avoided, or at least provide a justification that it doesn't."},
+  {n:2,reviewer:'Reviewer A',result:'NR',date:'Jun 03',summary:"Same issue — any problem requiring a computer cannot be accepted.",verbatim:"It's not about stumping the LLM or not, any problem that requires a computer or running a program cannot be accepted because it is deemed too computational, that's unfortunately part of the rules. Here, the computations of the coefficients and \"Now evaluate the three integrals numerically,\" violate this requirement."},
+  {n:3,reviewer:'Reviewer B',result:'NR',date:'Jun 04',summary:"New issue: region definition unclear. Green's theorem integrals lack boundary orientation explanation.",verbatim:"Thanks for the submission. The prompt needs a clearer definition of the region. Since the curve is self intersecting and open, \"the union of all bounded regions enclosed by the curve\" is not precise enough. It should say exactly which bounded components are included, or define the region as the union of bounded connected components of the complement of the curve trace. The final answer format should also be tightened, such as nearest integer multiple of 1000. The final answer appears correct, but the solution is not fully checkable yet. It states the region decomposition without justifying it, and the Green's theorem integrals in Step 6 are given without a clear boundary orientation explanation. The numerical roots and integral values also need enough detail to reproduce them."},
+  {n:4,reviewer:'Reviewer A',result:'NR',date:'Jun 05',summary:"Too computational (again) — two variables and integrals computed numerically.",verbatim:"A submission that requires a computer or running a program is considered too computational, any problem should be doable by hand in reasonable time. Here two variables and the integrals are computed numerically."},
+  {n:5,reviewer:'Reviewer A',result:'NR',date:'Jun 05',summary:"Too computational (again).",verbatim:"In general problems need to be hand-solvable using a pen and a paper in a reasonable time, and any that require a computer cannot be accepted. Here two variables and the integrals are computed numerically."},
+  {n:6,reviewer:'Reviewer A',result:'NR',date:'Jun 05',summary:"Anything requiring a computer is excluded unless you show calculations to rigorously establish an approximation.",verbatim:"The requirement is pretty straightforward: anything that requires a computer or running a program is excluded. Numerical evaluation for integrals / finding roots is thus excluded, except if you do show in the solution the calculations that allow you to rigorously establish an approximation."},
+  {n:7,reviewer:'Reviewer C',result:'',date:'Jun 05',summary:'',verbatim:''},
+  {n:8,reviewer:'Reviewer D',result:'NR',date:'Jun 05',summary:"Steps 1–6 reasonable but Step 7 requires numerical computation. Final answer M ≈ 3,041,361 cannot be reproduced by hand.",verbatim:"The analytical setup (Steps 1–6) is generally reasonable. However, Step 7 requires substantial numerical computation to evaluate multiple large definite integrals and obtain the final mass. The solution relies on numerically determined self intersection parameters (obtained via Newton's method in Step 3) and then uses those approximated values as integration limits in several nontrivial integrals. The final answer, M ≈ 3,041,361, cannot be reproduced by hand from the information provided and effectively requires numerical integration software or a computer algebra system. As written, the problem is primarily a computational exercise rather than a reasoning-based one."},
+  {n:9,reviewer:'Reviewer E',result:'NR',date:'Jun 06',summary:"New issue: Exact Scalar answer type no longer accepted.",verbatim:"The final answer type is clearly Exact Scalar, which is no longer accepting submissions. Please revise the prompt so that a different answer type is meaningfully reached."},
+  {n:10,reviewer:'Reviewer E',result:'NR',date:'Jun 06',summary:"New issue: solution violates prompt constraint by reparameterizing with u=t/6.",verbatim:"The problem explicitly requires \"use the original parameter t throughout; do not reparameterize the curve\" but the provided solution sets \"let u = t/6\", directly invalidating this requirement of the prompt. Also in Step 7, you are missing a \"\\\" on your \"\\,\" for M_{top}."},
+  {n:11,reviewer:'Reviewer A',result:'NR',date:'Jun 07',summary:"Solution is clearly for a different problem than what the prompt describes.",verbatim:"The solution is clearly for another problem than the one written in the prompt."},
+]},
+
+{id:'cs002',caseId:'CS-002',title:'LaTeX Errors + Drifting Problem Statement',project:'Main',nrCount:10,totalReviews:14,uniqueReviewers:8,daysInFlight:7,flags:['Excessive Rounds','Multi-Reviewer','Contradictory Feedback'],
+submission:{
+  prompt:"Let $G$ be the abelian group with generators $x_1,x_2,x_3,x_4$ and relations encoded by the integer matrix $A=\\begin{bmatrix}6&10&14&22\\\\10&18&26&38\\\\14&26&42&58\\\\22&38&58&86\\end{bmatrix}$, where the rows give relations among the generators. Determine the invariant factor decomposition of $G=\\mathbb{Z}^4/\\operatorname{rowspan}_{\\mathbb{Z}}(A)$.",
+  domain:"Abstract Algebra — Module theory",
+  answerType:"Canonical form",
+  problemType:"Canonicalization or normalization",
+  finalAnswer:"$\\mathbb{Z} \\oplus \\mathbb{Z}/2\\mathbb{Z} \\oplus \\mathbb{Z}/4\\mathbb{Z} \\oplus \\mathbb{Z}/4\\mathbb{Z}$",
+  domainExplanation:"This problem involves integer powers, cyclic sums, parity-based cancellation, and explicit constructions of integer tuple partitions, which are part of Number Theory. However, the main reasoning depends on Smith normal form and finitely generated modules over Z, so Abstract Algebra / Module theory is the most appropriate domain.",
+  steps:["Step 1: The invariant factor decomposition is determined by the Smith normal form of $A$. If the nonzero Smith invariant factors are $d_1,d_2,d_3$ with $d_1|d_2|d_3$, then $G \\cong \\mathbb{Z}^{4-r} \\oplus \\mathbb{Z}/d_1\\mathbb{Z} \\oplus \\mathbb{Z}/d_2\\mathbb{Z} \\oplus \\mathbb{Z}/d_3\\mathbb{Z}$.","Step 2: $\\det(A)=0$ but the upper-left $3\\times3$ minor has determinant $32\\neq 0$. Therefore $\\operatorname{rank}(A)=3$, so $G$ has one free $\\mathbb{Z}$ summand.","Step 3: First determinantal divisor $\\Delta_1 = \\gcd(6,10,14,22,18,26,38,42,58,86) = 2$. Thus $d_1=2$.","Step 4: Second determinantal divisor $\\Delta_2 = \\gcd$ of all $2\\times2$ minors $= 8$. Therefore $d_1 d_2 = 8$, so $d_2=4$.","Step 5: Third determinantal divisor $\\Delta_3 = \\gcd$ of all $3\\times3$ minors $= 32$. Therefore $d_1 d_2 d_3 = 32$, so $d_3=4$.","Step 6: Smith normal form is $\\operatorname{diag}(2,4,4,0)$. Therefore $G \\cong \\mathbb{Z} \\oplus \\mathbb{Z}/2\\mathbb{Z} \\oplus \\mathbb{Z}/4\\mathbb{Z} \\oplus \\mathbb{Z}/4\\mathbb{Z}$. Final Answer: $\\boxed{\\mathbb{Z} \\oplus \\mathbb{Z}/2\\mathbb{Z} \\oplus \\mathbb{Z}/4\\mathbb{Z} \\oplus \\mathbb{Z}/4\\mathbb{Z}}$"]
+},
+timeline:[
+  {n:1,reviewer:'Reviewer A',result:'NR',date:'Apr 28',summary:"'The integers can be partitioned' is ambiguous — does not specify the set.",verbatim:"The phrase \"the integers can be partitioned\" is ambiguous and does not specify the set being partitioned, which is required for clarity. As written, it may refer to an infinite collection, making the task infeasible."},
+  {n:2,reviewer:'Reviewer A',result:'NR',date:'Apr 29',summary:"Definition of 'balanced' is ill-posed — partitioning into infinitely many n-tuples is undefined.",verbatim:"The definition of balanced in this context is ill-posed. The definition requires we partition the complete set of integers into infinitely many n-tuples, so n→∞, but this further complicates matters as ∞ is not a number, so it cannot be a positive integer. There are no restrictions on how tuples are formed, creating an ambiguous situation."},
+  {n:3,reviewer:'Reviewer B',result:'NR',date:'Apr 29',summary:"Step 4 contradicts Step 3. Set brackets must be typeset as \\{...\\} not {...}.",verbatim:"Solution: Step 4 seems to contradict Step 3. Step 3 partitions all positive integers into groups of m, and Step 4 talks about an unused group of m-1 and an unused pair. I suggest you introduce a step explaining exactly how you are partitioning the positive integers. Formatting: Please note that set brackets must be typeset in LaTeX as \\{...\\}, and not simply {...}."},
+  {n:4,reviewer:'(unknown)',result:'',date:'Apr 30',summary:'',verbatim:''},
+  {n:5,reviewer:'Reviewer C',result:'NR',date:'Apr 30',summary:"Claim that even n is balanced when 4|n is not justified — 14 should be included.",verbatim:"The solution is mostly correct, please revise the following issues: In the question the correct LaTeX format of writing S={2,5,9,...} is S=\\{2,5,9,...\\}. In step 1 you said for n=2, a tuple (x,y) has cyclic sum x²y+y²x=xy(x+y). So each valid pair must either contain 0 or be of the form (m,-m). Since 0 can appear only once in the bijection, if we use the pair (0,1), then -1 is left over. Therefore n=2 is not balanced. So the statement \"every even element of S is balanced\" is not correct."},
+  {n:6,reviewer:'Reviewer A',result:'NR',date:'May 01',summary:"LaTeX set brackets {} still wrong — cannot change your prompt for you.",verbatim:"I need to send this back because the prompt is still incorrect. You still need to update everyplace where you are using {} for a set. In LaTeX this will not render correctly, thereby causing issues with the model. I cannot change your prompt for you. You need to change this."},
+  {n:7,reviewer:'Reviewer D',result:'NR',date:'May 01',summary:"Claim about 4|n not justified. Also missing Final Answer: \\boxed{...} format.",verbatim:"You claim that an even integer n is balanced exactly when 4|n, but this is not justified, for example 14 should be included. Your proof also has gaps: the claimed modulo 4 obstruction in Step 3 is not established, and the construction involving the unique integer 0 in Step 5 is asserted without a valid partition argument. The final step of the problem must use LaTeX box format to denote the answer and end with \"Final Answer: $\\boxed{<answer goes here>}$\""},
+  {n:8,reviewer:'Reviewer E',result:'',date:'May 01',summary:'',verbatim:''},
+  {n:9,reviewer:'Reviewer C',result:'',date:'May 01',summary:'',verbatim:''},
+  {n:10,reviewer:'Reviewer G',result:'NR',date:'May 02',summary:"Mod 4 argument gap. Step 5 gap — constructing tuple with 0 not justified.",verbatim:"Thanks for the submission. The prompt itself looks fine. The issue is in the solution. The main problem is Step 3. It claims that no n ≡ 2 (mod 4) can be balanced, but the mod 4 argument does not actually prove that. It only gives a parity restriction, and that is not enough to force the tuple entries into opposite pairs or rule out other kinds of cancellation. There is also a gap in Step 5. It says that 0 can be put into one exceptional valid tuple, but that is exactly the part that needs to be shown."},
+  {n:11,reviewer:'Reviewer D',result:'NR',date:'May 04',summary:"LaTeX rendering error in prompt — matrix doesn't render. Cannot fix it myself.",verbatim:"I agree with the final answer, but the prompt has a LaTeX rendering error which I cannot fix (bc it's in the prompt). Please check using the preview tab, the matrix does not render well. Until this is fixed, this cannot be accepted."},
+  {n:12,reviewer:'Reviewer F',result:'NR',date:'May 05',summary:"Math correct (Smith normal form diag(2,4,4,0)) but LaTeX row breaks need \\\\. Domain explanation wrong — this is Abstract Algebra not Number Theory.",verbatim:"thank you for your hard work. The final mathematical answer is correct. The Smith normal form is diag(2,4,4,0), so the group is Z ⊕ Z/2Z ⊕ Z/4Z ⊕ Z/4Z. But this still needs revision. The matrix in the prompt has a LaTeX rendering issue. The row breaks should use `\\\\`, otherwise the matrix does not preview correctly. The domain explanation also does not match the problem. It talks about Number Theory, integer powers, cyclic sums, and parity. This problem is about Smith normal form and finitely generated modules over Z, so the explanation should support Abstract Algebra / Module theory."},
+  {n:13,reviewer:'Reviewer A',result:'NR',date:'May 05',summary:"LaTeX still broken. Row breaks should use \\\\.",verbatim:"Thanks for resubmitting this problem. There is still an issue with the latex in the prompt. The matrix in the prompt has a LaTeX rendering issue. We need the prompt to be 100% valid in LaTeX before it can be accepted. The row breaks should use `\\\\`, otherwise the matrix does not preview correctly."},
+  {n:14,reviewer:'Reviewer A',result:'REJECT',date:'May 05',summary:'Rejected.',verbatim:''},
+]},
+
+{id:'cs003',caseId:'CS-003',title:'Prompt Unresolved After 13 Rounds',project:'Main',nrCount:10,totalReviews:13,uniqueReviewers:6,daysInFlight:28,flags:['Excessive Rounds','Long In-Flight','Multi-Reviewer'],
+submission:null,
+timeline:[
+  {n:1,reviewer:'Reviewer A',result:'NR',date:'May 03',summary:"Step 4 error: prompt asks for expected value but solution computes probability.",verbatim:"There is an error in Step 4. The prompt asked to compute the expected value, but you computed the probability. Take a moment to look this over and adjust the prompt or the steps so they align."},
+  {n:2,reviewer:'Reviewer B',result:'NR',date:'May 03',summary:"Handwavy black box in Step 2 — 'a complete enumeration gives' is not self-contained.",verbatim:"The solution relies on a handwavy claim: step 2's \"Using run decomposition (alternating blocks of N's and E's) and computing the area as a linear combination of partial heights, a complete enumeration gives\" — Under the project self-containment requirement, this cannot be accepted."},
+  {n:3,reviewer:'Reviewer C',result:'',date:'May 14',summary:'',verbatim:''},
+  {n:4,reviewer:'Reviewer B',result:'NR',date:'May 14',summary:"Solution doesn't answer prompt re: θ̂₃ — its limiting distribution is ill-posed since it's generally inconsistent.",verbatim:"The solution doesn't fully answer the prompt, I agree that θ̂₃ is generally inconsistent, but that means either the problem is ill-posed, because the prompt asks for the limiting distribution of √n(θ̂₃-θ), which thus diverges, or that should be stated in the final answer, but then \"as functions of θ and c\" would be invalid."},
+  {n:5,reviewer:'Reviewer B',result:'NR',date:'May 15',summary:"Prompt says 'as functions of θ and c' so 'no finite ARE exists' is not acceptable. Avoid multiple questions.",verbatim:"The prompt says \"as functions of θ and c\", so \"no finite ARE exists\" is not acceptable, the prompt is ill-posed. Also you generally should avoid asking multiple questions within one single prompt, or you should at the very least request a unique output format so the difficulty check can run with no issue."},
+  {n:6,reviewer:'Reviewer B',result:'NR',date:'May 18',summary:"Output very hard to verify. Stick to one question with a specified output format.",verbatim:"The problem with asking multiple questions within one problem is that the output is very hard to check for the models, you should either stick to asking for only one thing, and specifying the desired output format."},
+  {n:7,reviewer:'Reviewer B',result:'NR',date:'May 19',summary:"Prompt ambiguity: θ̂₃ undefined when no observation satisfies Xᵢ ≤ c. Convention for ARE should be stated.",verbatim:"Mathematically speaking this checks out, the only issue is prompt ambiguity: θ̂₃=1/c·max{Xᵢ: Xᵢ≤c} is not defined on the event that no observation satisfies Xᵢ≤c, that event has probability tending to 0, but the finite-sample estimator should still be defined. The convention for ARE(θ̂₂,θ̂₁) should be stated because the reverse ratio is sometimes used."},
+  {n:8,reviewer:'Reviewer B',result:'NR',date:'May 20',summary:"Prompt asks for multiple things but final answer is only a 4-tuple. Problem not fully solved.",verbatim:"The prompt asks for multiple things for each estimator, but the final answer is only (θ², θ²/(log2)², 1, (log2)²). So the problem is not fully solved. Please make sure prompt and solution are consistent."},
+  {n:9,reviewer:'Reviewer D',result:'NR',date:'May 21',summary:"Prompt has no actual ask — defines estimators but then stops.",verbatim:"The prompt doesn't actually have any asks. You define the estimators but then don't follow it up with any actual task. The solution seems to assume the task is to find asymptotic distributions, asymptotic variances, efficiency, and relative efficiency. Please revise the prompt so that it matches the solution and has an actual request."},
+  {n:10,reviewer:'Reviewer B',result:'NR',date:'May 29',summary:"Avoid asking multiple things, especially 'Discuss' — final answer must be reliably verifiable.",verbatim:"In the way the problem is currently formulated, this is not a good fit for our project. You should avoid asking for multiple difference things, and most importantly things like \"Discuss\": we want the final answer to be reliably and easily verified, so the final answer needs to be streamlined and the expected output clearly set."},
+  {n:11,reviewer:'Reviewer E',result:'',date:'May 30',summary:'',verbatim:''},
+  {n:12,reviewer:'Reviewer F',result:'NR',date:'May 30',summary:"Math is sound. Remove 'Discuss' — define a record tuple format (A₁,A₂,A₃) as the single objective output.",verbatim:"Thank you for your work and rebuttal. The math is sound, and the prompt is still salvageable. You can ask for a tuple or multiset of objects that encapsulates all your requested points by first defining them. The core goal should not be a discussion or proof-type problem. It has to be accurate, machine-verifiable, and an answerable prompt that requires a mathematical expression as the final answer. The most important point: please remove the word 'Discuss', change it to something that is verifiable."},
+  {n:13,reviewer:'Reviewer A',result:'REJECT',date:'May 31',summary:'Rejected.',verbatim:''},
+]},
+
+{id:'cs004',caseId:'CS-004',title:'Same NR Repeated 10x by One Reviewer',project:'Main',nrCount:10,totalReviews:12,uniqueReviewers:3,daysInFlight:16,flags:['Excessive Rounds','Repeated Same NR'],
+submission:{
+  prompt:"Let $A=\\begin{pmatrix}1&2\\sqrt{6}\\\\0&2\\end{pmatrix}$, whose eigenvalues $1$ and $2$ are real and well separated (gap $1$). Output, with full derivation: (a) the right and left eigenvectors and the per-eigenvalue condition numbers $\\kappa(\\lambda_i)$; (b) the first-order eigenvalue sensitivity together with the exact eigenvalues of the perturbed matrix $A+\\varepsilon E$ for $E=e_2e_1^T$; (c) the Bauer-Fike eigenvector-matrix condition number $\\kappa_2(V)$; (d) the exceptional (defective) perturbation — the value $\\varepsilon^*$ at which $A+\\varepsilon E$ acquires a repeated eigenvalue, that eigenvalue, and the Frobenius departure from normality of $A$; (e) the conceptual explanation, contrasting with the symmetric/normal case via Weyl's theorem.",
+  domain:"Linear Algebra — Numerical linear algebra",
+  answerType:"Exact symbolic expression",
+  problemType:"Symbolic derivation",
+  finalAnswer:"$x_1=(1,0)^T, x_2=(2\\sqrt{6},1)^T, y_1=(1,-2\\sqrt{6})^T, y_2=(0,1)^T$; $\\kappa(\\lambda_1)=\\kappa(\\lambda_2)=5$; $\\lambda_{\\pm}(\\varepsilon)=\\frac{3\\pm\\sqrt{1+8\\sqrt{6}\\,\\varepsilon}}{2}$; $\\kappa_2(V)=5+2\\sqrt{6}\\approx9.90$; $\\varepsilon^*=-\\frac{\\sqrt{6}}{48}$, $\\lambda=\\frac{3}{2}$; $\\operatorname{dep}_F(A)=2\\sqrt{6}$",
+  domainExplanation:"Eigenvalue conditioning is the central sensitivity question of numerical linear algebra — a simple eigenvalue's first-order response to a perturbation is amplified by κ(λ). Separating conditioning from the spectral gap is the conceptual heart of perturbation theory here.",
+  steps:["Step 1: $A$ is upper triangular so $\\lambda_1=1$, $\\lambda_2=2$. Right eigenvectors: $x_1=(1,0)^T$, $x_2=(2\\sqrt{6},1)^T$. Left: $y_1=(1,-2\\sqrt{6})^T$, $y_2=(0,1)^T$. Condition numbers: $\\kappa(\\lambda_1)=\\kappa(\\lambda_2)=5$.","Step 2: With $E=e_2e_1^T$, exact eigenvalues are $\\lambda_{\\pm}(\\varepsilon)=\\frac{3\\pm\\sqrt{1+8\\sqrt{6}\\,\\varepsilon}}{2}$. First-order: each moves by $2\\sqrt{6}\\,\\varepsilon \\approx 4.899\\varepsilon$, nearly saturating $\\kappa=5$.","Step 3: Unit-column eigenvector matrix $V$ gives $\\kappa_2(V)=5+2\\sqrt{6}\\approx9.899$.","Step 4: Eigenvalues collide when discriminant $1+8\\sqrt{6}\\,\\varepsilon=0$, i.e. $\\varepsilon^*=-\\frac{\\sqrt{6}}{48}\\approx-0.051$. Repeated eigenvalue $\\lambda=\\frac{3}{2}$. Frobenius departure: $\\operatorname{dep}_F(A)=2\\sqrt{6}\\approx4.899$.","Step 5: For a normal matrix, $y_i=x_i$, $\\kappa(\\lambda_i)=1$, and Weyl gives $|\\Delta\\lambda_i|\\le\\|E\\|_2=\\varepsilon$. Bounds nest: $\\varepsilon \\le 2\\sqrt{6}\\,\\varepsilon \\le 5\\varepsilon \\le (5+2\\sqrt{6})\\varepsilon$. Final Answer: $\\boxed{...}$"]
+},
+timeline:[
+  {n:1,reviewer:'Reviewer A',result:'NR',date:'May 22',summary:"Not a good fit — no conceptual difficulty, mostly computational and routine. Solution not self-contained.",verbatim:"This is not a good fit for our project, because there is no conceptual difficulty, it's mostly computational and routine calculations. Also, the solution is not self-contained, you assert the final results with little to no intermediate steps. I would advise you to significantly modify the problem so there's a true reasoning layer."},
+  {n:2,reviewer:'Reviewer B',result:'NR',date:'May 22',summary:"Agrees — too computational, not reasoning-based.",verbatim:"I agree with the previous reviewer's note. This submission is not a good fit for the project because it mainly relies on heavy and routine calculations rather than conceptual or reasoning based problem solving. In this project, submissions that are primarily computation based are not accepted, the question should require meaningful mathematical reasoning, insight, or analysis rather than lengthy calculations alone."},
+  {n:3,reviewer:'Reviewer A',result:'NR',date:'May 23',summary:"Previous review still holds.",verbatim:"The previous review still holds: This submission is not a good fit for the project because it mainly relies on heavy and routine calculations rather than conceptual or reasoning based problem solving."},
+  {n:4,reviewer:'Reviewer A',result:'NR',date:'May 24',summary:"Proofs not allowed: 'Then prove that', 'Prove that the block Cholesky factorization'.",verbatim:"Proofs are not allowed: \"Then prove that\", \"Prove that the block Cholesky factorization\""},
+  {n:5,reviewer:'Reviewer C',result:'',date:'May 26',summary:'',verbatim:''},
+  {n:6,reviewer:'Reviewer A',result:'NR',date:'May 27',summary:"Schur complement of A₁₁ incorrectly labeled as Schur complement of A₂₂. Expected output should be clearly stated.",verbatim:"You say S=A₂₂−A₂₁A₁₁⁻¹A₁₂ is the Schur complement of A₂₂ in A, but that's incorrect, this S is the Schur complement of A₁₁ in A, not of A₂₂. The Schur complement of A₂₂ would be A₁₁−A₁₂A₂₂⁻¹A₂₁. Also, the expected output should be clearly stated and all the 'derive...' should be avoided."},
+  {n:7,reviewer:'Reviewer A',result:'NR',date:'May 31',summary:"Avoid asking multiple things, especially unverifiable things like 'stating why the formula applies'.",verbatim:"In general you should avoid asking for multiple different things, especially if it's things that are not verifiable like \"stating why the formula applies\". If you do, the output format should be clearly set, with precisely what should be in the final answer."},
+  {n:8,reviewer:'Reviewer A',result:'NR',date:'Jun 02',summary:"Same — multiple unrelated questions.",verbatim:"As you were told in the previous review, you should avoid asking for multiple different things, especially when they are unrelated and each step solves one sub-question."},
+  {n:9,reviewer:'Reviewer A',result:'NR',date:'Jun 03',summary:"'The Cholesky recurrence gives' and 'Sherman–Morrison gives' are complete black boxes.",verbatim:"\"The Cholesky recurrence gives\" and \"Sherman–Morrison gives\" are complete black boxes and cannot be accepted, the final answer is unsupported."},
+  {n:10,reviewer:'Reviewer A',result:'NR',date:'Jun 03',summary:"Not original — same kind of question as before. Exclusively computational, no conceptual challenge.",verbatim:"Same remark as your other submissions: this is not original, you have already asked this kind of question before, it is exclusively computational with no conceptual challenge, and the justifications are too compressed."},
+  {n:11,reviewer:'Reviewer A',result:'NR',date:'Jun 06',summary:"Solution compressed — perturbation bound not justified. Part (d) not reliably checkable, should be removed.",verbatim:"The solution is a bit compressed, Step 2 states the perturbation bound and condition-number formula, but it doesn't justify why these formulas apply to this nonnormal matrix beyond quoting first-order perturbation theory. Step 3 says the perturbation direction is close to worst-case, but it does not prove or quantify this, and you need to justify diagonalizability in step 4. Also, the final answer should be a clean mathematical object, (d) should be removed as it's not reliably checkable."},
+  {n:12,reviewer:'Reviewer A',result:'REJECT',date:'Jun 07',summary:'Rejected.',verbatim:''},
+]},
+
+{id:'cs005',caseId:'CS-005',title:'Formatting NRs Stalled Valid Submission',project:'Main',nrCount:9,totalReviews:10,uniqueReviewers:6,daysInFlight:25,flags:['Multi-Reviewer','Contradictory Feedback'],
+submission:{
+  prompt:"A fair six-sided die is rolled repeatedly. The game ends as soon as a $6$ is rolled. You receive a payout of $2^{n}$ dollars, where $n$ is the total number of rolls made (including the final roll that resulted in a $6$). However, the maximum payout is capped at $100$ dollars. Find the expected value of the payout in dollars.",
+  domain:"Probability and Statistics — Random variables and distributions",
+  answerType:"Exact scalar (deprecated — flagged in reviews)",
+  problemType:"Exact computation",
+  finalAnswer:"$\\frac{169931}{3888}$",
+  domainExplanation:"This problem involves calculating the expected value of a payout that depends on a discrete random variable n (the number of rolls until a 6 appears). The core of the solution requires identifying that n follows a Geometric Distribution and then applying the definition of expected value for a discrete random variable.",
+  steps:["Step 1: The number of rolls $n$ follows a geometric distribution with $p=1/6$. $P(n)=(5/6)^{n-1}\\cdot(1/6)$.","Step 2: Payout threshold: $2^6=64 < 100 < 128=2^7$. So payout is $2^n$ for $n\\le 6$, capped at $100$ for $n\\ge 7$.","Step 3: $E_1 = \\sum_{n=1}^{6} 2^n \\cdot (5/6)^{n-1} \\cdot (1/6) = (1/3)\\sum_{n=1}^{6}(5/3)^{n-1} = \\frac{7448}{729}$.","Step 4: $P(n\\ge 7)=(5/6)^6=\\frac{15625}{46656}$. $E_2=100\\cdot\\frac{15625}{46656}=\\frac{390625}{11664}$.","Step 5: $E = E_1+E_2 = \\frac{119168}{11664}+\\frac{390625}{11664}=\\frac{509793}{11664}=\\frac{169931}{3888}$. Final Answer: $\\boxed{\\frac{169931}{3888}}$."]
+},
+timeline:[
+  {n:1,reviewer:'Reviewer A',result:'NR',date:'May 10',summary:"Wrong LaTeX delimiters throughout — not rendering correctly.",verbatim:"Please format everything using LaTeX math mode delimited with $. As it stands, it is not rendering correctly."},
+  {n:2,reviewer:'Reviewer B',result:'NR',date:'May 10',summary:"Too much formatting error to fix manually. Use $...$ style LaTeX throughout.",verbatim:"Too much formatting error to fix manually on the reviewer side. Please adhere to the formatting guidelines in the project's document to ensure you are compliant with the necessary requirement of formatting. Please present final answer as the required format Final Answer: $\\boxed{<answer>}$. Also ensure that you use $..$ style latex throughout and there are no typos during final submission."},
+  {n:3,reviewer:'Reviewer C',result:'NR',date:'May 10',summary:"Solution is correct but $...$ required; \\(...\\) and \\[...\\] not allowed.",verbatim:"Your solution is correct, but your LaTeX notation needs revision. Please note that according to the guidelines: $...$ and $$...$$ are allowed. \\(...\\) and \\[...\\] are not allowed. For example, instead of writing \\(n\\), you must write $n$. Also, the final answer must be presented in boxed form, such as: Final Answer: \\boxed{<answer>}. Please check sample submissions in the guideline."},
+  {n:4,reviewer:'Reviewer D',result:'NR',date:'Jun 01',summary:"Formatting still wrong. Should take under 20 seconds to fix.",verbatim:"Thanks for submitting this. The formatting in the question uses the wrong math environment. You will have to rewrite the prompt, as stated in the project guidelines, and not use \\(...\\) or \\[...\\]. You may only use $...$ or $$...$$ for the math environment. I cannot change the prompt as the error is in the original question; you will need to do this. It shouldn't take 20 minutes, but less than 20 seconds."},
+  {n:5,reviewer:'Reviewer E',result:'NR',date:'Jun 01',summary:"New issue: Exact Scalar no longer accepted. Suggest redesigning as a vector answer (E₁, E₂, E).",verbatim:"The expected value calculation is correct, but the answer type is not allowed. The final answer is one exact scalar, and Exact Scalar is no longer accepted. Please revise the prompt so the answer is a valid non-scalar type, like a vector. For example, ask for (E₁,E₂,E), where E₁ is the contribution from n≤6, E₂ is the capped tail contribution, and E is the total expected payout."},
+  {n:6,reviewer:'Reviewer C',result:'NR',date:'Jun 02',summary:"Solution correct but LaTeX still wrong. Don't put final answer in box in the separate answer field.",verbatim:"The solution is correct, but your LaTeX format is incorrect in the solution, please use $...$ instead of \\(,)\\. Also please don't put the final answer in the box in the separate final answer field."},
+  {n:7,reviewer:'Reviewer A',result:'NR',date:'Jun 02',summary:"Math checks out. Final step must use \\boxed{} format. Missing computation of E.",verbatim:"The math checks out, but a few remarks: The final step of the problem must use LaTeX box format to denote the answer and end with \"Final Answer: $\\boxed{<answer goes here>}$\". This is not an Exact Scalar (and that's good, this answer type is no longer accepted!). You are missing the computation of E. Please fix these and resubmit."},
+  {n:8,reviewer:'Reviewer F',result:'NR',date:'Jun 03',summary:"Rebuttal too generic — doesn't address concern about computation of E.",verbatim:"The math appears correct, but the rebuttal mostly focuses on formatting cleanup and does not directly address the reviewer's concern about the computation of (E). A brief confirmation that the final calculations were rechecked would make the resubmission clearer. Also, the rebuttal reads a bit generic; please rewrite it more directly in your own words."},
+  {n:9,reviewer:'Reviewer E',result:'NR',date:'Jun 04',summary:"Step 4 still a black box. Classification concern — Diophantine equations subdomain almost closed.",verbatim:"The final answer looks correct, but the solution is not complete enough. Step 4 is still a black box. You list the ten candidates after the first congruence, but you do not show how the full finite search was done or why no other positive primitive pairs survive. For a classification task, this completeness part must be clear. The topic is Diophantine equations, which is almost closed, so please confirm it is still available before resubmitting."},
+  {n:10,reviewer:'Reviewer A',result:'ACCEPT',date:'Jun 04',summary:'Accepted.',verbatim:''},
+]},
 ];
 
-const state={filter:'all',open:null,data:{}};
+const state={filter:'all',open:null,subVisible:{},verbatimVisible:{},data:{}};
 
-function loadState(){try{const s=localStorage.getItem('rotura_q');if(s)Object.assign(state.data,JSON.parse(s));}catch(e){}}
-function saveState(){try{localStorage.setItem('rotura_q',JSON.stringify(state.data));}catch(e){}}
+function loadState(){try{const s=localStorage.getItem('rotura_q2');if(s)Object.assign(state.data,JSON.parse(s));}catch(e){}}
+function saveState(){try{localStorage.setItem('rotura_q2',JSON.stringify(state.data));}catch(e){}}
 function getCD(id){return state.data[id]||{};}
 function setCD(id,p){state.data[id]={...getCD(id),...p};saveState();}
 function getStatus(id){return getCD(id).status||'Unreviewed';}
@@ -232,7 +292,107 @@ function renderStats(){
     ['Unreviewed',u,'color:var(--red-text)'],
     ['In Review',i,'color:var(--yellow-text)'],
     ['Complete',d,'color:var(--green-text)'],
-  ].map(([l,v,s])=>`<div class="stat-card"><div class="label">${l}</div><div class="value" style="${s}">${v}</div></div>`).join('');
+  ].map(([l,v,s])=>`<div class="stat-card"><div class="stat-label">${l}</div><div class="stat-value" style="${s}">${v}</div></div>`).join('');
+}
+
+function renderSubmission(c){
+  if(!c.submission) return `<div class="unavailable">Submission content unavailable — data not persisted in platform for this case.</div>`;
+  const s=c.submission;
+  const visible=state.subVisible[c.id];
+  const steps=JSON.parse(s.steps||'[]').catch?s.steps:(() => {try{return JSON.parse(s.steps);}catch{return s.steps||[];}})();
+  const stepsArr=Array.isArray(steps)?steps:(typeof steps==='string'?[steps]:[]);
+  return `
+    <div class="submission-toggle" onclick="toggleSub('${c.id}')">
+      <span>&#9654; View submission content (problem, solution, domain)</span>
+      <span style="font-size:11px;color:var(--text3)">${visible?'collapse':'expand'}</span>
+    </div>
+    <div class="submission-content${visible?' visible':''}">
+      <div class="sub-field"><div class="sub-field-label">Domain &amp; Sub-domain</div><div class="sub-field-value short">${s.domain||'—'}</div></div>
+      <div class="sub-field"><div class="sub-field-label">Problem type / Answer type</div><div class="sub-field-value short">${s.problemType||'—'} / ${s.answerType||'—'}</div></div>
+      <div class="sub-field"><div class="sub-field-label">Math problem (prompt)</div><div class="sub-field-value">${s.prompt||'—'}</div></div>
+      <div class="sub-field"><div class="sub-field-label">Final answer</div><div class="sub-field-value">${s.finalAnswer||'—'}</div></div>
+      <div class="sub-field"><div class="sub-field-label">Domain explanation</div><div class="sub-field-value short">${s.domainExplanation||'—'}</div></div>
+      <div class="sub-field">
+        <div class="sub-field-label">Step-by-step solution (${stepsArr.length} steps)</div>
+        <ul class="steps-list">${stepsArr.map((st,i)=>`<li class="step-item"><strong>Step ${i+1}:</strong> ${st}</li>`).join('')}</ul>
+      </div>
+    </div>`;
+}
+
+function renderTimeline(c){
+  return c.timeline.map(r=>`<div class="tl-row">
+    <div class="tl-num ${rClass(r.result)}">${r.n}</div>
+    <div class="tl-content">
+      <div class="tl-meta">
+        <span class="tl-reviewer">${r.reviewer}</span>
+        <span class="tl-date">${r.date}</span>
+        ${r.result?`<span class="tag tag-${r.result==='NR'?'red':r.result==='ACCEPT'?'gray':'orange'}" style="font-size:10px">${r.result}</span>`:''}
+      </div>
+      ${r.summary?`<div class="tl-summary">${r.summary}</div>
+        <button class="tl-verbatim-toggle" onclick="toggleVerbatim('${c.id}-${r.n}')">
+          ${state.verbatimVisible[c.id+'-'+r.n]?'hide full note':'show full note'}
+        </button>
+        <div class="tl-verbatim${state.verbatimVisible[c.id+'-'+r.n]?' visible':''}">${r.verbatim}</div>`
+      :`<div class="tl-empty">No revision note recorded.</div>`}
+    </div>
+  </div>`).join('');
+}
+
+function renderBody(c){
+  const cd=getCD(c.id);
+  const dt=cd.diagTags||[];
+  return `<div class="card-body">
+    <div class="section">
+      <div class="section-title">Original author</div>
+      <div style="font-size:13px;color:var(--text2)">Original Author (identity available internally)</div>
+    </div>
+    <div class="section">
+      <div class="section-title">Submission content</div>
+      ${renderSubmission(c)}
+    </div>
+    <div class="section">
+      <div class="section-title">Review history &mdash; ${c.nrCount} NRs across ${c.totalReviews} rounds</div>
+      <div class="timeline">${renderTimeline(c)}</div>
+    </div>
+    <div class="section">
+      <div class="section-title">Diagnosis</div>
+      <div class="assign-row">
+        <label>Assigned to:</label>
+        <select onchange="setCD('${c.id}',{assignee:this.value})">
+          <option value="">&#8212; Unassigned &#8212;</option>
+          ${W2_ECS.map(e=>`<option value="${e}"${cd.assignee===e?' selected':''}>${e}</option>`).join('')}
+        </select>
+      </div>
+      <div class="diag-grid">${DIAG_OPTS.map(o=>`<span class="diag-chip${dt.includes(o)?' on':''}" onclick="toggleDiag('${c.id}','${o}')">${o}</span>`).join('')}</div>
+      <div class="field">
+        <label>Additional notes</label>
+        <textarea placeholder="Describe root cause, reviewer gaps, submitter pattern..." onchange="setCD('${c.id}',{diagNotes:this.value})">${cd.diagNotes||''}</textarea>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Coaching messages</div>
+      <div class="field">
+        <label>Reviewer coaching note &mdash; reviewers in this case are anonymized above. See internal Notion key for emails.</label>
+        <textarea placeholder="Specific, actionable message for reviewer(s). What should they do differently?" onchange="setCD('${c.id}',{reviewerNote:this.value})">${cd.reviewerNote||''}</textarea>
+      </div>
+      <div class="field">
+        <label>Original Author coaching note</label>
+        <textarea placeholder="Message for the original author. What can they fix going forward?" onchange="setCD('${c.id}',{submitterNote:this.value})">${cd.submitterNote||''}</textarea>
+      </div>
+    </div>
+    <div class="section">
+      <div class="actions">
+        ${cd.savedAt?`<span class="save-msg">&#10003; Saved ${cd.savedAt}</span>`:''}
+        <select onchange="updateStatus('${c.id}',this.value)" style="font-size:12px;padding:6px 10px;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--bg2);color:var(--text)">
+          <option${getStatus(c.id)==='Unreviewed'?' selected':''}>Unreviewed</option>
+          <option${getStatus(c.id)==='In Review'?' selected':''}>In Review</option>
+          <option${getStatus(c.id)==='Complete'?' selected':''}>Complete</option>
+        </select>
+        <button class="btn btn-blue" onclick="copyNotes('${c.id}')">&#8663; Copy coaching notes</button>
+        <button class="btn btn-green" onclick="markComplete('${c.id}')">&#10003; Save &amp; complete</button>
+      </div>
+    </div>
+  </div>`;
 }
 
 function renderQueue(){
@@ -259,73 +419,31 @@ function renderQueue(){
   }).join('');
 }
 
-function renderBody(c){
-  const cd=getCD(c.id);
-  const dt=cd.diagTags||[];
-  return `<div class="card-body">
-    <div class="section">
-      <div class="section-title">Review history (${c.nrCount} NRs across ${c.totalReviews} rounds)</div>
-      <div class="timeline">${c.timeline.map(r=>`<div class="tl-row">
-        <div class="tl-num ${rClass(r.result)}">${r.n}</div>
-        <div class="tl-content">
-          <div class="tl-meta">
-            <span class="tl-reviewer">${r.reviewer.split('@')[0]}</span>
-            <span class="tl-date">${r.date}</span>
-            ${r.result?`<span class="tag tag-${r.result==='NR'?'red':r.result==='ACCEPT'?'gray':'orange'}" style="font-size:10px">${r.result}</span>`:''}
-          </div>
-          ${r.note?`<div class="tl-note">${r.note}</div>`:`<div class="tl-empty">No revision note recorded.</div>`}
-        </div>
-      </div>`).join('')}</div>
-    </div>
-    <div class="section">
-      <div class="section-title">Diagnosis</div>
-      <div class="assign-row">
-        <label>Assigned to:</label>
-        <select onchange="setCD('${c.id}',{assignee:this.value})">
-          <option value="">&#8212; Unassigned &#8212;</option>
-          ${W2_ECS.map(e=>`<option value="${e}"${cd.assignee===e?' selected':''}>${e}</option>`).join('')}
-        </select>
-      </div>
-      <div class="diag-grid">${DIAG_OPTS.map(o=>`<span class="diag-chip${dt.includes(o)?' on':''}" onclick="toggleDiag('${c.id}','${o}')">${o}</span>`).join('')}</div>
-      <div class="field">
-        <label>Additional notes</label>
-        <textarea placeholder="Describe root cause, reviewer gaps, submitter pattern..." onchange="setCD('${c.id}',{diagNotes:this.value})">${cd.diagNotes||''}</textarea>
-      </div>
-    </div>
-    <div class="section">
-      <div class="section-title">Coaching messages</div>
-      <div class="field">
-        <label>Reviewer coaching note &mdash; reviewers: ${c.reviewers}</label>
-        <textarea placeholder="Specific, actionable message for reviewer(s). What should they do differently?" onchange="setCD('${c.id}',{reviewerNote:this.value})">${cd.reviewerNote||''}</textarea>
-      </div>
-      <div class="field">
-        <label>Submitter coaching note</label>
-        <textarea placeholder="Message for the submitter. What can they fix going forward?" onchange="setCD('${c.id}',{submitterNote:this.value})">${cd.submitterNote||''}</textarea>
-      </div>
-    </div>
-    <div class="actions">
-      ${cd.savedAt?`<span class="save-msg">&#10003; Saved ${cd.savedAt}</span>`:''}
-      <select onchange="updateStatus('${c.id}',this.value)" style="font-size:12px;padding:6px 10px;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--bg2);color:var(--text)">
-        <option${getStatus(c.id)==='Unreviewed'?' selected':''}>Unreviewed</option>
-        <option${getStatus(c.id)==='In Review'?' selected':''}>In Review</option>
-        <option${getStatus(c.id)==='Complete'?' selected':''}>Complete</option>
-      </select>
-      <button class="btn btn-blue" onclick="copyNotes('${c.id}')">&#8663; Copy coaching notes</button>
-      <button class="btn btn-green" onclick="markComplete('${c.id}')">&#10003; Save &amp; complete</button>
-    </div>
-  </div>`;
-}
-
 window.toggleCard=function(id){
   state.open=state.open===id?null:id;
   if(state.open&&getStatus(id)==='Unreviewed')setCD(id,{status:'In Review'});
   render();
-  if(state.open)setTimeout(()=>{const el=document.getElementById('card-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
+  if(state.open)setTimeout(()=>{const el=document.getElementById('card-'+id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},50);
 };
 window.setFilter=function(f){
   state.filter=f;
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.filter===f));
   renderQueue();renderStats();
+};
+window.toggleSub=function(id){
+  state.subVisible[id]=!state.subVisible[id];
+  const btn=document.querySelector(`#card-${id} .submission-toggle span:last-child`);
+  const content=document.querySelector(`#card-${id} .submission-content`);
+  if(btn)btn.textContent=state.subVisible[id]?'collapse':'expand';
+  if(content)content.classList.toggle('visible',state.subVisible[id]);
+};
+window.toggleVerbatim=function(key){
+  state.verbatimVisible[key]=!state.verbatimVisible[key];
+  const btn=document.querySelector(`[onclick="toggleVerbatim('${key}')"]`);
+  const box=btn?.nextElementSibling;
+  const cid=key.split('-').slice(0,2).join('-'); // handles cs00X-N
+  if(btn)btn.textContent=state.verbatimVisible[key]?'hide full note':'show full note';
+  if(box)box.classList.toggle('visible',state.verbatimVisible[key]);
 };
 window.updateStatus=function(id,v){setCD(id,{status:v});renderStats();};
 window.toggleDiag=function(id,opt){
@@ -336,7 +454,7 @@ window.toggleDiag=function(id,opt){
 };
 window.copyNotes=function(id){
   const cd=getCD(id);const c=CASES.find(x=>x.id===id);
-  const txt=`=== REVIEWER COACHING NOTE (${c.caseId}) ===\n${cd.reviewerNote||'(not drafted)'}\n\n=== SUBMITTER COACHING NOTE (${c.caseId}) ===\n${cd.submitterNote||'(not drafted)'}`;
+  const txt=`=== REVIEWER COACHING NOTE (${c.caseId}) ===\n${cd.reviewerNote||'(not drafted)'}\n\n=== ORIGINAL AUTHOR COACHING NOTE (${c.caseId}) ===\n${cd.submitterNote||'(not drafted)'}`;
   navigator.clipboard.writeText(txt).catch(()=>{});
 };
 window.markComplete=function(id){
